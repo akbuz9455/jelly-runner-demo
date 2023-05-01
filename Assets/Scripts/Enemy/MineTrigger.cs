@@ -26,19 +26,20 @@ public class MineTrigger : MonoBehaviour
 
 
         }
-        if (other.tag == "Player" && Input.GetMouseButton(0))
+        if ((other.tag == "Player"|| other.tag =="LittleJelly") && Input.GetMouseButton(0))
         {
             if (isActive)
             {
-                if (!other.GetComponent<JellyFollow>().firstJelly)
+                if (other.tag == "LittleJelly")
                 {
-                    other.GetComponent<JellyFollow>().Dead();
+                    GameManager.Instance.Dead();
+                  
 
 
                 }
                 else
                 {
-                    GameManager.Instance.Dead();
+                    other.GetComponent<JellyFollow>().Dead();
                 }
                
                 bombParticle.transform.parent = GameManager.Instance.ParticlePooling.transform;

@@ -9,9 +9,17 @@ public class FinishTrigger : MonoBehaviour
     {
         if (other.tag=="Player")
         {
-            GameManager.Instance.gameStatus = Enums.GameStatus.gameEnd;
-           bool aloneMode = true;
-         GameManager.Instance.player.GetComponent<PlayerManager>().modeChange(aloneMode);
+            if (GameManager.Instance.gameStatus == Enums.GameStatus.ready)
+            {
+                GameManager.Instance.gameStatus = Enums.GameStatus.gameEnd;
+                bool aloneMode = true;
+                if (!PlayerManager.Instance.aloneMode)
+                {
+                    GameManager.Instance.player.GetComponent<PlayerManager>().modeChange(aloneMode);
+                }
+             
+            }
+
         }
     }
 }

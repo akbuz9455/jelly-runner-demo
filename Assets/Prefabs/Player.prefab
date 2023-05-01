@@ -5303,7 +5303,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827611199442786364}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21144,6 +21144,24 @@ CapsuleCollider:
   m_Height: 2.27
   m_Direction: 1
   m_Center: {x: 0, y: 1.04, z: 0}
+--- !u!114 &827611199985983044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557652306728872835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d0abb6487b7fa4da9d8a35640eb491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 557652306867517634}
+  isDead: 0
+  startFollow: 0
+  firstJelly: 1
+  deadParticle: {fileID: 827611199706716165}
+  margeParticle: {fileID: 8126319513479091792}
 --- !u!195 &827611199985983054
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21178,24 +21196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50af008bf0faa0479c84f0310fcc40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &827611199985983044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557652306728872835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4d0abb6487b7fa4da9d8a35640eb491, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 557652306867517634}
-  isDead: 0
-  startFollow: 0
-  firstJelly: 1
-  deadParticle: {fileID: 827611199706716165}
-  margeParticle: {fileID: 8126319513479091792}
 --- !u!4 &934212686448701753 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1a04bb100c326054c8842ff0f44977e5, type: 3}
@@ -21345,7 +21345,7 @@ CapsuleCollider:
   m_Height: 2.27
   m_Direction: 1
   m_Center: {x: 0, y: 1.04, z: 0}
---- !u!114 &827611200183256428
+--- !u!114 &827611200183256424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21354,14 +21354,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 557652306867517634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25373e812716b034dbba0dbc64093ae1, type: 3}
+  m_Script: {fileID: 11500000, guid: e529508778aec5a4a878fa9e936492a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinnedMeshRenderer: {fileID: 797042132056072906}
-  mainJellyForMultiMode: {fileID: 557652306728872835}
-  scaleFactor: 0.1
-  scaleInterval: 0.075
-  grownParticle: {fileID: 8126319512161201865}
+  movementSpeed: 10
+  smoothTime: 0.85
+  centerObj: {fileID: 827611199879834295}
+  backSphere: {fileID: 0}
+  xMinLimit: -3.5
+  xMaxLimit: 3.5
 --- !u!114 &827611200183256426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21387,7 +21388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aloneMode: 1
---- !u!114 &827611200183256424
+--- !u!114 &827611200183256428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21396,15 +21397,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 557652306867517634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e529508778aec5a4a878fa9e936492a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 25373e812716b034dbba0dbc64093ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
-  smoothTime: 1.2
-  centerObj: {fileID: 827611199879834295}
-  backSphere: {fileID: 0}
-  xMinLimit: -3.5
-  xMaxLimit: 3.5
+  skinnedMeshRenderer: {fileID: 797042132056072906}
+  mainJellyForMultiMode: {fileID: 557652306728872835}
+  scaleFactor: 0.1
+  scaleInterval: 0.075
+  grownParticle: {fileID: 8126319512161201865}
+  readyCollect: 0
 --- !u!137 &797042132056072906 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 32630862888970073, guid: 1a04bb100c326054c8842ff0f44977e5, type: 3}

@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class EnemyRazor : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
        transform.DOLocalMoveX(1.7f, 1.85f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutCirc);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && Input.GetMouseButton(0))
+        if ((other.CompareTag("Player") || other.CompareTag("LittleJelly")) && Input.GetMouseButton(0))
         {
-            if (other.GetComponent<JellyFollow>().firstJelly)
+            if ( other.CompareTag("LittleJelly"))
             {
                 GameManager.Instance.Dead();
             }
@@ -30,7 +29,11 @@ public class EnemyRazor : MonoBehaviour
             float littleValue = PlayerManager.Instance.scaleFactor;
             GameObject player = GameManager.Instance.player;
             GameManager.Instance.player.transform.DOScale(new Vector3(player.transform.localScale.x - littleValue, player.transform.localScale.y - littleValue, player.transform.localScale.z - littleValue), .35f).SetEase(Ease.OutSine);
-           
+            JellyManager.Instance.jellyList[JellyManager.Instance.jellyList.Count - 1].GetComponent<JellyFollow>().Dead();
+            if (JellyManager.Instance.jellyList.Count < 2)
+            {
+                GameManager.Instance.Dead();
+            }
 
         }
     }

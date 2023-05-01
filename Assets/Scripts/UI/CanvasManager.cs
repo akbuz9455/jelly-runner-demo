@@ -17,6 +17,7 @@ public class CanvasManager : SceneDependentSingleton<CanvasManager>
     {
 
         guide.transform.DOScale(Vector3.zero, 0);
+     
    
     }
 

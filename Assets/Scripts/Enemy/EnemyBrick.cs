@@ -28,34 +28,36 @@ public class EnemyBrick : MonoBehaviour
      
         if (other.tag == "Player" && !Input.GetMouseButton(0)  && !brickTrigger)
         {
-                Debug.Log("girdi duvar algoritma");
+           
             foreach (var item in brickList)
             {
                 item.GetComponent<Rigidbody>().isKinematic = false;
             }
-            float littleValue = WallLevel * PlayerManager.Instance.scaleFactor;
-            GameObject player = GameManager.Instance.player;
-            GameManager.Instance.player.transform.DOScale(new Vector3(player.transform.localScale.x- littleValue, player.transform.localScale.y- littleValue, player.transform.localScale.z- littleValue),.35f).SetEase(Ease.OutSine);
-            for (int i = 0; i < JellyManager.Instance.jellyList.Count; i++)
-            {
-                player.transform.localScale -= new Vector3(transform.localScale.x-PlayerManager.Instance.scaleFactor, transform.localScale.y- PlayerManager.Instance.scaleFactor, transform.localScale.z-PlayerManager.Instance.scaleFactor);
+                float littleValue = PlayerManager.Instance.scaleFactor;
+                GameObject player = GameManager.Instance.player;
+                for (int i = 0; i < WallLevel; i++)
+                {
+                    player.transform.DOScale(new Vector3(player.transform.localScale.x - littleValue, player.transform.localScale.y - littleValue, player.transform.localScale.z - littleValue), 0f);
 
-            }
+                    JellyManager.Instance.jellyList[JellyManager.Instance.jellyList.Count - 1].GetComponent<JellyFollow>().Dead();
+                    if (JellyManager.Instance.jellyList.Count < 2)
+                    {
+                        GameManager.Instance.Dead();
+                    }
+                }
                 brickTrigger = true;
 
             }
-        if (other.tag=="Player" && Input.GetMouseButton(0))
+        if ((other.tag=="Player"&& Input.GetMouseButton(0) || (other.tag == "LittleJelly" && Input.GetMouseButton(0))))
         {
-                if (other.GetComponent<JellyFollow>().firstJelly)
+                if (other.tag == "Player")
                 {
-                  GameManager.Instance.Dead();
+                    other.GetComponent<JellyFollow>().Dead();
                 }
-                else
+                else if (other.tag ==  "LittleJelly")
                 {
-                    
-                        other.GetComponent<JellyFollow>().Dead();
-                  
-
+                    GameManager.Instance.Dead();
+                    brickTrigger = true;
                 }
        
            

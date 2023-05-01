@@ -1,22 +1,15 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-public class EnemyHammer : MonoBehaviour
+
+public class EnemyUnderProp : MonoBehaviour
 {
-    public GameObject hammer;
-
-
-    void Start()
-    {
-        hammer.transform.DOLocalRotate(new Vector3(0, 0, 180), 1.45f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InExpo);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag== "Player" && Input.GetMouseButton(0))
+        if ((other.tag == "Player" || other.tag =="LittleJelly")&& Input.GetMouseButton(0) && GameManager.Instance.gameStatus != Enums.GameStatus.gameOver)
         {
-            if (other.GetComponent<JellyFollow>().firstJelly)
+            if (other.tag == "LittleJelly")
             {
                 GameManager.Instance.Dead();
             }
@@ -24,18 +17,22 @@ public class EnemyHammer : MonoBehaviour
             {
                 other.GetComponent<JellyFollow>().Dead();
             }
-          
+
         }
-        if (other.tag == "Player" && !Input.GetMouseButton(0))
+        if (other.tag == "Player" && !Input.GetMouseButton(0) && GameManager.Instance.gameStatus!=Enums.GameStatus.gameOver)
         {
-            
+
             float littleValue = PlayerManager.Instance.scaleFactor;
             GameObject player = GameManager.Instance.player;
             GameManager.Instance.player.transform.DOScale(new Vector3(player.transform.localScale.x - littleValue, player.transform.localScale.y - littleValue, player.transform.localScale.z - littleValue), .35f).SetEase(Ease.OutSine);
-            GameManager.Instance.Dead();
-            hammer.transform.DOKill();
+          
+            JellyManager.Instance.jellyList[JellyManager.Instance.jellyList.Count - 1].GetComponent<JellyFollow>().Dead();
+            if (JellyManager.Instance.jellyList.Count<2)
+            {
+                GameManager.Instance.Dead();
+            }
 
-            hammer.transform.DOLocalRotate(new Vector3(0, 0, 95), .45f).SetEase(Ease.OutSine) ;
+            transform.DOMoveX(7.73f, .55f).SetEase(Ease.OutSine);
 
 
         }

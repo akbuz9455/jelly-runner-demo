@@ -11,8 +11,10 @@ public class JellyFollow : MonoBehaviour
     public bool isDead;
     public bool startFollow;
     public bool firstJelly;
+    public bool isJump;
     public GameObject deadParticle;
     public GameObject margeParticle;
+    float distanceToTarget;
     private void OnEnable()
     {
         if (!firstJelly)
@@ -39,22 +41,23 @@ public class JellyFollow : MonoBehaviour
             startFollow = true;
             GetComponent<Animator>().SetBool("Run", true);
             JellyManager.Instance.jellyList.Add(gameObject);
-            GameManager.Instance.player.transform.localScale = (Vector3.one/10) + GameManager.Instance.player.transform.localScale;
+   
         }
 
     }
 
     public void Dead()
     {
+       
         isDead = true;
-        deadParticle.transform.parent = GameManager.Instance.ParticlePooling.transform;
+        deadParticle.transform.parent = null;
         deadParticle.GetComponent<ParticleSystem>().Play();
-
+       // transform.DOMove(Target.transform.position, .35f);
         transform.DOScale(Vector3.zero, .25f).SetEase(Ease.OutSine).OnComplete(() => {
             JellyManager.Instance.jellyList.Remove(gameObject);
             TargetManager.Instance.removeTarget(GetComponent<JellyFollow>().Target);
             startFollow = false;
-            if (JellyManager.Instance.jellyList.Count < 2)
+            if (JellyManager.Instance.jellyList.Count < 2 && GameManager.Instance.gameStatus==Enums.GameStatus.ready)
             {
                 GameManager.Instance.Dead();
             }
@@ -64,8 +67,20 @@ public class JellyFollow : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isDead && startFollow && GameManager.Instance.gameStatus == Enums.GameStatus.ready && !firstJelly)
+       
+
+        if (!isDead && startFollow && GameManager.Instance.gameStatus == Enums.GameStatus.ready && !firstJelly && !GameManager.Instance.isGround)
         {
+            distanceToTarget = Vector3.Distance(transform.position, Target.transform.position); 
+
+            if (distanceToTarget > 0.55f)
+            {
+                _NavMesh.speed = 11.25f;
+            }
+            else
+            { 
+                _NavMesh.speed = 6.25f;
+            }
             _NavMesh.SetDestination(Target.transform.position);
         }
 

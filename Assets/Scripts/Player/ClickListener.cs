@@ -6,7 +6,7 @@ public class ClickListener : MonoBehaviour
 {
     AnimationManager animManager;
 
-     float countdownAloneJelly = 3f;
+    float countdownAloneJelly = 3f;
     float countdownMultiJelly = 3f;
     float counterTotalAlone = .35f;
     float counterTotalMulti = .25f;
@@ -18,28 +18,24 @@ public class ClickListener : MonoBehaviour
     void Start()
     {
         countdownAloneJelly = counterTotalAlone;
-        counterTotalMulti = counterTotalMulti;
         animManager = GetComponent<AnimationManager>();
     }
 
     
     void Update()
     {
-        if (GameManager.Instance.gameStatus != Enums.GameStatus.gameOver && GameManager.Instance.gameStatus != Enums.GameStatus.gameEnd)
+        if (GameManager.Instance.gameStatus != Enums.GameStatus.gameOver && GameManager.Instance.gameStatus != Enums.GameStatus.gameEnd && !GameManager.Instance.isGround)
         {
-
-     
         if (Input.GetMouseButton(0))
         {
                
             tag = "LittleJelly";
             countdownMultiJelly = counterTotalMulti;
-            if (GameManager.Instance.gameStatus == Enums.GameStatus.waiting)
+            if (GameManager.Instance.gameStatus == Enums.GameStatus.ready)
                 {
                     CanvasManager.Instance.GameStart();
-                    GameManager.Instance.gameStatus = Enums.GameStatus.ready;
-                animManager.SetRun();
-            }
+                    animManager.SetRun();
+                }
 
             if (countdownAloneJelly >= 0)
             {
@@ -53,11 +49,7 @@ public class ClickListener : MonoBehaviour
                     GetComponent<PlayerManager>().modeChange(aloneMode);
 
                 }
-
-
             }
-
-
         }
         else
         {
@@ -81,9 +73,5 @@ public class ClickListener : MonoBehaviour
 
         }
         }
-
-        ///
-
-
     }
 }
