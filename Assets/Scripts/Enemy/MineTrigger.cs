@@ -33,13 +33,19 @@ public class MineTrigger : MonoBehaviour
                 if (other.tag == "LittleJelly")
                 {
                     GameManager.Instance.Dead();
-                  
-
-
                 }
                 else
                 {
                     other.GetComponent<JellyFollow>().Dead();
+                    foreach (var item in JellyManager.Instance.jellyList)
+                    {
+                        if (!item.GetComponent<JellyFollow>().isDead)
+                        {
+                            item.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, item.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                        }
+
+                    }
                 }
                
                 bombParticle.transform.parent = GameManager.Instance.ParticlePooling.transform;

@@ -12,6 +12,8 @@ public class PlayerManager : SceneDependentSingleton<PlayerManager>
     public bool readyCollect;
     Vector3 scaleSizeItem;
     public bool aloneMode;
+    public GameObject winTrail;
+    public GameObject bigTrail;
 
     public void ReadyCollect()
     {
@@ -52,8 +54,11 @@ public class PlayerManager : SceneDependentSingleton<PlayerManager>
         }
 
         yield return new WaitForSeconds(scaleInterval);
-     
-        mainJellyForMultiMode.transform.DOMove(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z + .5f), .3f).SetEase(Ease.InSine).OnComplete(() => {
+            GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
+           
+            bigTrail.SetActive(true);
+            bigTrail.GetComponent<ParticleSystem>().Play();
+            mainJellyForMultiMode.transform.DOMove(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z + .5f), .3f).SetEase(Ease.InSine).OnComplete(() => {
 
             mainJellyForMultiMode.SetActive(false);
         });
@@ -94,14 +99,15 @@ public class PlayerManager : SceneDependentSingleton<PlayerManager>
             item.GetComponent<Animator>().SetBool("Idle", false);
             item.GetComponent<Animator>().SetBool("Run", true);
             item.transform.localScale = new Vector3(1 - ((JellyManager.Instance.jellyList.Count*scaleFactor)), 1 - ((JellyManager.Instance.jellyList.Count * scaleFactor)), 1- ((JellyManager.Instance.jellyList.Count * scaleFactor)));
-            Debug.Log("JellyManager.Instance.jellyList.Count*scaleFactor : "+ JellyManager.Instance.jellyList.Count * scaleFactor);
-                Debug.Log("JellyManager.Instance.jellyList.Count : " + JellyManager.Instance.jellyList.Count );
-                Debug.Log("scaleFactor : " +  scaleFactor);
+
 
             }
         yield return new WaitForSeconds(scaleInterval);
-       
-        if (JellyManager.Instance.jellyList.Count>0)
+            
+            bigTrail.SetActive(false);
+            GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
+          
+            if (JellyManager.Instance.jellyList.Count>0)
         {
             transform.DOScale(JellyManager.Instance.jellyList[0].transform.localScale, .15f);
         }

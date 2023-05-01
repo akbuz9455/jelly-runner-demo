@@ -20,6 +20,16 @@ public class EnemyRazor : MonoBehaviour
             else
             {
                 other.GetComponent<JellyFollow>().Dead();
+
+                foreach (var item in JellyManager.Instance.jellyList)
+                {
+                    if (!item.GetComponent<JellyFollow>().isDead)
+                    {
+                        item.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, item.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                    }
+
+                }
             }
 
         }
@@ -29,11 +39,19 @@ public class EnemyRazor : MonoBehaviour
             float littleValue = PlayerManager.Instance.scaleFactor;
             GameObject player = GameManager.Instance.player;
             GameManager.Instance.player.transform.DOScale(new Vector3(player.transform.localScale.x - littleValue, player.transform.localScale.y - littleValue, player.transform.localScale.z - littleValue), .35f).SetEase(Ease.OutSine);
-            JellyManager.Instance.jellyList[JellyManager.Instance.jellyList.Count - 1].GetComponent<JellyFollow>().Dead();
-            if (JellyManager.Instance.jellyList.Count < 2)
+            
+            if (JellyManager.Instance.jellyList.Count >2)
+            {
+                JellyManager.Instance.jellyList[JellyManager.Instance.jellyList.Count - 1].GetComponent<JellyFollow>().Dead();
+
+            }
+            else
             {
                 GameManager.Instance.Dead();
+                player.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, player.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
             }
+
 
         }
     }

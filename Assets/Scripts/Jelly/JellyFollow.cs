@@ -7,11 +7,12 @@ using UnityEngine.AI;
 public class JellyFollow : MonoBehaviour
 {
     public GameObject Target;
-    private NavMeshAgent _NavMesh;
+    public NavMeshAgent _NavMesh;
     public bool isDead;
     public bool startFollow;
     public bool firstJelly;
     public bool isJump;
+    public bool isSlides;
     public GameObject deadParticle;
     public GameObject margeParticle;
     float distanceToTarget;
@@ -20,8 +21,16 @@ public class JellyFollow : MonoBehaviour
         if (!firstJelly)
         {
         _NavMesh = GetComponent<NavMeshAgent>();
+            if (startFollow)
+            {
+             _NavMesh.enabled = false; 
+            }
+        
         if (startFollow)
-        {
+            {
+                transform.position = new Vector3(GameManager.Instance.player.transform.position.x, GameManager.Instance.player.transform.position.y + 1f, GameManager.Instance.player.transform.position.z);
+
+                _NavMesh.enabled = true;
             tag = "Player";
             Target = TargetManager.Instance.CheckFreeTarget();
             GetComponent<Animator>().SetBool("Idle", false);
@@ -69,13 +78,17 @@ public class JellyFollow : MonoBehaviour
     {
        
 
-        if (!isDead && startFollow && GameManager.Instance.gameStatus == Enums.GameStatus.ready && !firstJelly && !GameManager.Instance.isGround)
+        if (!isDead && startFollow && GameManager.Instance.gameStatus == Enums.GameStatus.ready && !firstJelly && !GameManager.Instance.isGround && _NavMesh.enabled==true)
         {
             distanceToTarget = Vector3.Distance(transform.position, Target.transform.position); 
 
-            if (distanceToTarget > 0.55f)
+            if (distanceToTarget > 0.55f && distanceToTarget <=6f )
             {
                 _NavMesh.speed = 11.25f;
+            }
+            else if (distanceToTarget > 6f && distanceToTarget < 15f)
+            {
+                _NavMesh.speed = 21.25f;
             }
             else
             { 

@@ -1,8 +1,6 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEditor.AI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -18,7 +16,9 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         addedScale =  Vector3.zero;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60; 
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
     }
 
     public void Dead() {

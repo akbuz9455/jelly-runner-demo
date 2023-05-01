@@ -44,6 +44,11 @@ public class EnemyBrick : MonoBehaviour
                     {
                         GameManager.Instance.Dead();
                     }
+                    else
+                    {
+                        player.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, player.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                    }
                 }
                 brickTrigger = true;
 
@@ -53,21 +58,23 @@ public class EnemyBrick : MonoBehaviour
                 if (other.tag == "Player")
                 {
                     other.GetComponent<JellyFollow>().Dead();
+                    foreach (var item in JellyManager.Instance.jellyList)
+                    {
+                        if (!item.GetComponent<JellyFollow>().isDead)
+                        {
+                            item.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, item.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                        }
+
+                    }
                 }
                 else if (other.tag ==  "LittleJelly")
                 {
                     GameManager.Instance.Dead();
                     brickTrigger = true;
                 }
-       
-           
-          
-    
-        }
-            if (WallLevel < JellyManager.Instance.jellyList.Count)
-            {
-             //   Debug.Log("Game Over");
-            }
+
+              }
         }
     }
 }

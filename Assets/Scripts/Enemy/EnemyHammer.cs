@@ -23,6 +23,13 @@ public class EnemyHammer : MonoBehaviour
             else
             {
                 other.GetComponent<JellyFollow>().Dead();
+                foreach (var item in JellyManager.Instance.jellyList)
+                {
+                    if (!item.GetComponent<JellyFollow>().isDead)
+                    {
+                        item.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, item.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+                    }
+                }
             }
           
         }
@@ -35,7 +42,6 @@ public class EnemyHammer : MonoBehaviour
             GameManager.Instance.player.transform.DOScale(new Vector3(player.transform.localScale.x - littleValue, player.transform.localScale.y - littleValue, player.transform.localScale.z - littleValue), .35f).SetEase(Ease.OutSine);
             GameManager.Instance.Dead();
             hammer.transform.DOKill();
-
             hammer.transform.DOLocalRotate(new Vector3(0, 0, 95), .45f).SetEase(Ease.OutSine) ;
 
 

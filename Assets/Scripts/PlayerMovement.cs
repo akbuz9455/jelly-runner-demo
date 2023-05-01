@@ -24,22 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameManager.Instance.gameStatus == Enums.GameStatus.ready || GameManager.Instance.gameStatus == Enums.GameStatus.gameEnd)
         {
-           RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit))
-            {
-                float slopeAngle = Vector3.Angle(hit.normal, Vector3.up); // yamaç açýsýný hesaplayýn
-                if (slopeAngle > 0 && slopeAngle <= 45f) // nesneyi sadece belirli bir eðim açýsýnýn altýnda hareket ettirin
-                {
-                    Vector3 slopeDirection = Vector3.Cross(Vector3.up, hit.normal); // yamaç yönünü hesaplayýn
-                    float slopeSpeedModifier = Mathf.Cos(slopeAngle * Mathf.Deg2Rad); // eðim açýsýna baðlý hýz ayarý hesaplayýn
-                    transform.Translate(slopeDirection * movementSpeed * slopeSpeedModifier * Time.deltaTime); // nesneyi yamaç eðimine göre hareket ettirin
-                }
-                else
-                {
-                   
-                }
-                Debug.Log("girdi raycast");
-            }
+
             transform.Translate(Vector3.forward * Time.deltaTime * movementSpeed);
             if (Input.GetMouseButtonDown(0))
             {

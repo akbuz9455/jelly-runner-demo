@@ -33,7 +33,16 @@ public class EnemyMine : MonoBehaviour
                 item.GetComponent<MineTrigger>().isActive = false;
                 buttonBrokeAllMine.transform.DOLocalMoveY(-0.39f, .75f).SetEase(Ease.OutSine);
                 //particle patlatalim
-               
+
+            }
+            foreach (var item in JellyManager.Instance.jellyList)
+            {
+                if (!item.GetComponent<JellyFollow>().isDead)
+                {
+                    item.GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, item.GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                }
+
             }
         }
 
@@ -47,8 +56,9 @@ public class EnemyMine : MonoBehaviour
 
 
                 });
-            
-          
+
+            other.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, other.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
         }
     }
 }

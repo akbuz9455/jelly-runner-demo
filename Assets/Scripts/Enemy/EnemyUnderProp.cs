@@ -16,6 +16,17 @@ public class EnemyUnderProp : MonoBehaviour
             else
             {
                 other.GetComponent<JellyFollow>().Dead();
+
+
+                foreach (var item in JellyManager.Instance.jellyList)
+                {
+                    if (!item.GetComponent<JellyFollow>().isDead)
+                    {
+                        item.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, item.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
+                    }
+
+                }
             }
 
         }
@@ -30,6 +41,11 @@ public class EnemyUnderProp : MonoBehaviour
             if (JellyManager.Instance.jellyList.Count<2)
             {
                 GameManager.Instance.Dead();
+            }
+            else
+            {
+             GameManager.Instance.player.GetComponent<EmojiManager>().SadEmoji[Random.Range(0, GameManager.Instance.player.GetComponent<EmojiManager>().SadEmoji.Count)].GetComponent<ParticleSystem>().Play();
+
             }
 
             transform.DOMoveX(7.73f, .55f).SetEase(Ease.OutSine);

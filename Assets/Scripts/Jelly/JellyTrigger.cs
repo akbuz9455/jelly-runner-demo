@@ -31,16 +31,20 @@ public class JellyTrigger : MonoBehaviour
             GetComponent<JellyFollow>().StartFollow();
             JellyRenderer.materials[0].color = jellyCollectColor;
 
+            GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
+            other.GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
         }
         if (tag == "JellyMan" && (other.tag == "Player" || other.tag == "LittleJelly") && !Input.GetMouseButton(0) && PlayerManager.Instance.readyCollect)
         {
             Vector3 localScaleMain = GameManager.Instance.player.transform.localScale;
-            GameManager.Instance.player.transform.localScale = (Vector3.one * PlayerManager.Instance.scaleFactor) + localScaleMain;
+            GameManager.Instance.player.transform.localScale = (Vector3.one * PlayerManager.Instance.scaleFactor*3) + localScaleMain;
 
             GetComponent<JellyFollow>().StartFollow();
 
             gameObject.SetActive(false);
             JellyRenderer.materials[0].color = jellyCollectColor;
+            GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
+            other.GetComponent<EmojiManager>().HappyEmoji[Random.Range(0, GetComponent<EmojiManager>().HappyEmoji.Count)].GetComponent<ParticleSystem>().Play();
         }
     }
 }
